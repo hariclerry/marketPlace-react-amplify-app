@@ -21,6 +21,93 @@
 					"additionalAuthenticationProviders": []
 				}
 			}
+		},
+		"orderlambdafn": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "orderlambdafn",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
+	},
+	"storage": {
+		"s32820cc1e": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"orderlambda": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "marketplacereactampl938dd972",
+					"attributes": [
+						"UserPoolId"
+					]
+				},
+				{
+					"category": "api",
+					"resourceName": "marketplacereactampl",
+					"attributes": [
+						"GraphQLAPIIdOutput",
+						"GraphQLAPIEndpointOutput"
+					]
+				},
+				{
+					"category": "storage",
+					"resourceName": "s32820cc1e",
+					"attributes": [
+						"BucketName"
+					]
+				}
+			]
+		},
+		"orderlambdafn": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "marketplacereactampl938dd972",
+					"attributes": [
+						"UserPoolId"
+					]
+				},
+				{
+					"category": "api",
+					"resourceName": "marketplacereactampl",
+					"attributes": [
+						"GraphQLAPIIdOutput",
+						"GraphQLAPIEndpointOutput"
+					]
+				},
+				{
+					"category": "storage",
+					"resourceName": "s32820cc1e",
+					"attributes": [
+						"BucketName"
+					]
+				},
+				{
+					"category": "function",
+					"resourceName": "orderlambda",
+					"attributes": [
+						"Name"
+					]
+				}
+			]
 		}
 	}
 }

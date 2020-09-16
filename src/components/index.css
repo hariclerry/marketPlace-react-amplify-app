@@ -1,0 +1,8 @@
+amplify-photo-picker .photo-picker-container amplify-section amplify-button button{
+ display: none;
+}
+
+amplify-s3-image {
+--height: 300px;
+--width: 400px;
+}

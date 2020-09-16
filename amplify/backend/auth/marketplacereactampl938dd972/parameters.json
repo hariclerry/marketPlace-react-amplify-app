@@ -1,6 +1,6 @@
 {
     "identityPoolName": "marketplacereactampl938dd972_identitypool_938dd972",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "market938dd972",
     "userPoolName": "marketplacereactampl938dd972_userpool_938dd972",
     "autoVerifiedAttributes": [

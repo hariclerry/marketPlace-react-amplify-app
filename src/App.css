@@ -208,9 +208,13 @@ body {
 }
 
 .market-title-button {
-  padding-left: 0.5em !important;
-  color: #f90 !important;
-  font-size: 30px !important;
+  margin-left: 1.5em !important;
+  /* color: #f90 !important;
+  font-size: 30px !important; */
+}
+
+.el-button--success.is-plain {
+border: 1px solid #50bfff !important;
 }
 
 @media (min-width: 640px) {
@@ -286,6 +290,23 @@ body {
   flex-direction: column;
 }
 
+amplify-authenticator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100vh;
+}
+
+amplify-authenticator amplify-sign-out {
+  align-self: flex-start;
+  padding-top: 25px;
+}
+
+/* amplify-authenticator amplify-sign-out amplify-button {
+  background-color: #f4f8fb;
+ 
+} */
 @media (max-width: 470px) {
   .hide-xs {
     display: none;
