@@ -1,16 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
 import { AmplifyS3Image } from "@aws-amplify/ui-react";
 // prettier-ignore
 import { Notification, Popover, Button, Dialog, Card, Form, Input, Radio } from "element-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShippingFast, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+
 import { updateProduct, deleteProduct } from "../graphql/mutations";
 import { convertCentsToDollars, convertDollarsToCents } from "../utils";
 import { UserContext } from "../App";
-import { Link } from "react-router-dom";
 import PayButton from "./PayButton";
-
 import "./index.css";
 
 class Product extends React.Component {
@@ -32,9 +32,7 @@ class Product extends React.Component {
         shipped,
         price: convertDollarsToCents(price),
       };
-      await API.graphql(
-        graphqlOperation(updateProduct, { input })
-      );
+      await API.graphql(graphqlOperation(updateProduct, { input }));
       Notification({
         title: "Success",
         message: "Product successfully updated!",

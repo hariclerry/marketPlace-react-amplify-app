@@ -5,7 +5,11 @@ import Amplify, { API, graphqlOperation, Auth, Hub } from "aws-amplify";
 import { getUser } from "./graphql/queries";
 import { registerUser } from "./graphql/mutations";
 import createBrowserHistory from "history/createBrowserHistory";
-import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
+import {
+  AmplifyAuthenticator,
+  AmplifySignUp,
+  AmplifySignIn,
+} from "@aws-amplify/ui-react";
 
 import HomePage from "pages/HomePage";
 import MarketPage from "pages/MarketPage";
@@ -93,10 +97,25 @@ class App extends React.Component {
       console.error("Error signing out user", err);
     }
   };
+  renderText = () => (<div><p>Signup for AmplifyKatale</p><p>You can use <a href="https://10minutemail.com/">https://10minutemail.com</a>to use a fake email</p></div>)
   render() {
     const { user, userAttributes } = this.state;
     return !user ? (
-      <AmplifyAuthenticator />
+      <AmplifyAuthenticator>
+        <AmplifySignIn
+          headerText="Sign in into your AmplifyKatale account"
+          slot="sign-in"
+        ></AmplifySignIn>
+        <AmplifySignUp
+          slot="sign-up"
+          formFields={[
+            { type: "username" },
+            { type: "password" },
+            { type: "email" },
+          ]}
+          headerText="Sign Up for AmplifyKatale"
+        />
+      </AmplifyAuthenticator>
     ) : (
       <UserContext.Provider value={{ user, userAttributes }}>
         <Router history={history}>
@@ -106,7 +125,13 @@ class App extends React.Component {
 
             {/* Routes */}
             <div className="app-container">
-              <Route exact path="/" component={HomePage} />
+              <Route
+                exact
+                path="/"
+                component={() => (
+                  <HomePage user={user} />
+                )}
+              />
               <Route
                 path="/profile"
                 component={() => (

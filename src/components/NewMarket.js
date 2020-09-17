@@ -1,8 +1,9 @@
 import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { createMarket } from "../graphql/mutations";
 // prettier-ignore
 import { Form, Button, Dialog, Input, Select, Notification } from 'element-react'
+
+import { createMarket } from "../graphql/mutations";
 import { UserContext } from "../App";
 
 class NewMarket extends React.Component {
@@ -22,11 +23,7 @@ class NewMarket extends React.Component {
         tags: this.state.selectedTags,
         owner: user.username,
       };
-      const result = await API.graphql(
-        graphqlOperation(createMarket, { input })
-      );
-      console.log({ result });
-      // console.info(`Created market: id ${result.data.createMarket.id}`);
+      await API.graphql(graphqlOperation(createMarket, { input }));
       this.setState({ name: "", selectedTags: [] });
     } catch (err) {
       console.error("Error adding new market", err);
@@ -60,7 +57,7 @@ class NewMarket extends React.Component {
                   onClick={() => this.setState({ addMarketDialog: true })}
                 >
                   Create +
-                  </Button>
+                </Button>
               </h1>
 
               <Form inline={true} onSubmit={this.props.handleSearch}>

@@ -131,6 +131,9 @@ body {
   .nav-container {
     justify-content: center;
   }
+   .market-page-header {
+    flex-wrap: wrap;
+  }
 }
 
 /* push items in navbar to opposite ends if screen width > 520px */
@@ -138,12 +141,18 @@ body {
   .nav-container {
     justify-content: space-between;
   }
+   .market-page-header {
+    flex-wrap: wrap;
+  }
 }
 
 /* remove the navbar item that contains the Greetings text if width > 672px */
 @media (max-width: 690px) {
   .nav-items .el-menu-item:nth-child(1) {
     display: none !important;
+  }
+   .market-page-header {
+    flex-wrap: wrap;
   }
 }
 
@@ -195,31 +204,61 @@ body {
   flex-wrap: wrap;
 }
 
-.market-title {
-  font-weight: 300;
-  border-radius: 10px;
-  text-decoration: #f90 solid underline;
-  text-underline-position: under;
-  text-decoration-style: wavy;
-  font-size: 2.5rem;
-  display: flex;
-  color: var(--lightSquidInk);
-  align-items: center;
+.market-titlel {
+  font-size: 2.1rem;
+  margin-bottom: 100px;
 }
 
-.market-title-button {
-  margin-left: 1.5em !important;
-  /* color: #f90 !important;
-  font-size: 30px !important; */
+.el-button--danger.is-plain {
+  background: #fff;
+  border: none !important;
+  color: red !important;
 }
 
 .el-button--success.is-plain {
-border: 1px solid #50bfff !important;
+  border: 1px solid #50bfff !important;
+  margin-left: 31px;
+}
+
+.upload-image-container {
+  padding: 5px 0 30px 0;
+}
+.upload-image-container p {
+  font-size: 14px;
+  color: #48576a;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+.el-upload--picture-card {
+  width: 250px !important;
+}
+
+.avatar-preview {
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 248px;
+  height: 148px;
+}
+
+.market-page-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.test-warning {
+  text-align: right;
+  margin: 10px;
+  /* font-size: 24px; */
+  color: red;
 }
 
 @media (min-width: 640px) {
   .market-title {
     font-size: 3rem;
+  }
+  .market-page-header {
+    flex-wrap: wrap;
   }
 }
 
@@ -230,6 +269,9 @@ border: 1px solid #50bfff !important;
   .market-title-button {
     font-size: 25px !important;
   }
+   .market-page-header {
+    flex-wrap: wrap;
+  }
 }
 
 @media (max-width: 500px) {
@@ -238,6 +280,10 @@ border: 1px solid #50bfff !important;
   }
   .market-title-button {
     font-size: 25px !important;
+  }
+
+   .market-page-header {
+    flex-wrap: wrap;
   }
 }
 
@@ -248,6 +294,9 @@ border: 1px solid #50bfff !important;
   .market-title-button {
     font-size: 20px !important;
   }
+   .market-page-header {
+    flex-wrap: wrap;
+  }
 }
 
 @media (max-width: 350px) {
@@ -256,6 +305,9 @@ border: 1px solid #50bfff !important;
   }
   .market-title-button {
     font-size: 15px !important;
+  }
+   .market-page-header {
+    flex-wrap: wrap;
   }
 }
 

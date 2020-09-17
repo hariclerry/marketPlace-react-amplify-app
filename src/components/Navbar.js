@@ -1,10 +1,10 @@
 import React from "react";
-import { Menu as Nav, Icon, Button } from "element-react";
+import { Menu as Nav, Button } from "element-react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
-import AppIcon from "../assests/app-icon.png"
+import AppIcon from "../assests/app-icon.png";
 
 const Navbar = ({ user, handleSignout }) => (
   <Nav mode="horizontal" theme="dark" defaultActive="1">
@@ -26,7 +26,11 @@ const Navbar = ({ user, handleSignout }) => (
         </Nav.Item>
         <Nav.Item index="3">
           <NavLink to="/profile" className="nav-link">
-            <FontAwesomeIcon icon={faUser} size="lg" style={{paddingRight: "5px"}}/>
+            <FontAwesomeIcon
+              icon={faUser}
+              size="lg"
+              style={{ paddingRight: "5px" }}
+            />
             Profile
           </NavLink>
         </Nav.Item>

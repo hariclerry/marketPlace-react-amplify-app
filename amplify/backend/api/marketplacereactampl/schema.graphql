@@ -5,7 +5,7 @@ type Market @model @searchable {
   @connection(name: "MarketProducts", sortField: "createdAt")
   tags: [String]
   owner: String!
-  createdAt: String
+  createdAt: AWSDateTime
 }
 
 type Product

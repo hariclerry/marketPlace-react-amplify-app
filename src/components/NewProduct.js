@@ -1,18 +1,18 @@
 import React from "react";
 import { Storage, Auth, API, graphqlOperation } from "aws-amplify";
-import { createProduct } from "../graphql/mutations";
-
-import aws_exports from "../aws-exports";
 // prettier-ignore
 import {
   Form,
   Button,
   Input,
   Notification,
-  Radio
+  Radio,
+  Upload,
 } from "element-react";
-import { convertDollarsToCents } from "../utils";
 
+import { createProduct } from "../graphql/mutations";
+import aws_exports from "../aws-exports";
+import { convertDollarsToCents } from "../utils";
 import "./index.css";
 
 const initialState = {
@@ -30,15 +30,17 @@ class NewProduct extends React.Component {
   state = { ...initialState };
 
   handleAddProduct = async () => {
+    const { image } = this.state;
+    const imageData = image.raw;
     try {
       this.setState({ isUploading: true });
       const visibility = "public";
       const { identityId } = await Auth.currentCredentials();
       const filename = `/${visibility}/${identityId}/${Date.now()}-${
-        this.state.image.name
+        imageData.name
       }`;
-      const uploadedFile = await Storage.put(filename, this.state.image, {
-        contentType: this.state.image.type,
+      const uploadedFile = await Storage.put(filename, imageData, {
+        contentType: imageData.type,
       });
       const file = {
         key: uploadedFile.key,
@@ -52,10 +54,7 @@ class NewProduct extends React.Component {
         price: convertDollarsToCents(this.state.price),
         file,
       };
-      const result = await API.graphql(
-        graphqlOperation(createProduct, { input })
-      );
-      console.log("Created product", result);
+      await API.graphql(graphqlOperation(createProduct, { input }));
       Notification({
         title: "Success",
         message: "Product successfully created!",
@@ -67,10 +66,9 @@ class NewProduct extends React.Component {
     }
   };
 
-  handleChange = (event) => {
-    event.preventDefault();
+  handleChange = (file, fileList) => {
     this.setState({
-      image: event.target.files[0],
+      image: file,
     });
   };
 
@@ -118,14 +116,29 @@ class NewProduct extends React.Component {
                 </Radio>
               </div>
             </Form.Item>
-            <label htmlFor="img">Select image:</label>
-            <input
-              type="file"
-              id="img"
-              name="img"
-              onChange={this.handleChange}
-              accept="image/*"
-            />
+            <div className="upload-image-container">
+              <p>Add Photo </p>
+              <div className="el-upload el-upload--picture-card">
+                <Upload
+                  className="upload-demo"
+                  action=""
+                  showFileList={false}
+                  onChange={(file, fileList) =>
+                    this.handleChange(file, fileList)
+                  }
+                >
+                  {image ? (
+                    <img
+                      src={image.url}
+                      className="avatar-preview"
+                      alt="preview"
+                    />
+                  ) : (
+                    <i className="el-icon-plus avatar-uploader-icon"></i>
+                  )}
+                </Upload>
+              </div>
+            </div>
             <Form.Item>
               <Button
                 disabled={!image || !description || !price || isUploading}

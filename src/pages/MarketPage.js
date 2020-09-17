@@ -1,15 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { Loading, Tabs, Icon } from "element-react";
 import { API, graphqlOperation } from "aws-amplify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-// import { getMarket } from "../graphql/queries";
+
 import {
   onCreateProduct,
   onUpdateProduct,
   onDeleteProduct,
 } from "../graphql/subscriptions";
-import { Loading, Tabs, Icon } from "element-react";
-import { Link } from "react-router-dom";
 import NewProduct from "../components/NewProduct";
 import Product from "../components/Product";
 import { formatProductDate } from "../utils";
@@ -131,23 +131,33 @@ class MarketPage extends React.Component {
 
   render() {
     const { market, isLoading, isMarketOwner, isEmailVerified } = this.state;
-    console.log("ismarketowner", isMarketOwner);
 
     return isLoading ? (
       <Loading fullscreen={true} />
     ) : (
       <>
         {/* Back Button */}
+
         <Link className="link" to="/" style={{ color: "#00BFFF" }}>
           <FontAwesomeIcon icon={faArrowLeft} /> Back to Markets List
         </Link>
 
         {/* Market MetaData */}
-        <span className="items-center pt-2">
-          <h2 className="mb-mr">{market.name}</h2>- {market.owner}
-        </span>
+        <div className="market-page-header">
+          <span className="items-center pt-2">
+            <h2 className="mb-mr">{market.name}</h2>- {market.owner}
+          </span>
+          {!isMarketOwner && (
+            <div className="test-warning">
+              *Please use the following test credit card for payments with
+              Stripe*
+              <br />
+              Card Number: 4242 4242 4242 4242, Exp date: 04/24, CVC: 4242
+            </div>
+          )}
+        </div>
         <div className="items-center pt-2">
-          <span style={{ color: "var(--lightSquidInk)", paddingBottom: "1em" }}>
+          <span style={{ color: "#f7ba2a", paddingBottom: "1em" }}>
             <Icon name="date" className="icon" />
             {formatProductDate(market.createdAt)}
           </span>

@@ -1,7 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Auth, API, graphqlOperation } from "aws-amplify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 // prettier-ignore
 import { Table, Button, Notification, MessageBox, Message, Tabs, Icon, Form, Dialog, Input, Card, Tag } from 'element-react'
+
 import { convertCentsToDollars, formatProductDate } from "../utils";
 
 const getUser = `query GetUser($id: ID!) {
@@ -168,6 +172,7 @@ class ProfilePage extends React.Component {
       .then(async () => {
         try {
           await this.props.user.deleteUser();
+          await Auth.signOut();
         } catch (err) {
           console.error(err);
         }
@@ -194,6 +199,9 @@ class ProfilePage extends React.Component {
     return (
       userAttributes && (
         <>
+          <Link className="link" to="/" style={{ color: "#00BFFF" }}>
+            <FontAwesomeIcon icon={faArrowLeft} /> Back to Markets List
+          </Link>
           <Tabs activeName="1" className="profile-tabs">
             <Tabs.Pane
               label={
@@ -246,7 +254,6 @@ class ProfilePage extends React.Component {
               name="2"
             >
               <h2 className="header">Order History</h2>
-              {console.log("osderrreeee", orders)}
               {orders.map((order) => (
                 <div className="mb-1" key={order.id}>
                   <Card>

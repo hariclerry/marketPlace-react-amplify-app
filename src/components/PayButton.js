@@ -1,15 +1,16 @@
 import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { getUser } from "../graphql/queries";
-import { createOrder } from "../graphql/mutations";
 import StripeCheckout from "react-stripe-checkout";
 import { Notification, Message } from "element-react";
+
+import { getUser } from "../graphql/queries";
+import { createOrder } from "../graphql/mutations";
 import { history } from "../App";
 
 const stripeConfig = {
   currency: "USD",
   publishableAPIKey:
-    "pk_test_51HCWgoDXlzB9rNQrMUDKrrjkjiaYktY8vPugw1ZORD1qTStzy2VZUAM4ZSU2bNhIQcQdcQx6rSrzrUGJvq2yWvB000KF8ctgGC"
+    "pk_test_51HCWgoDXlzB9rNQrMUDKrrjkjiaYktY8vPugw1ZORD1qTStzy2VZUAM4ZSU2bNhIQcQdcQx6rSrzrUGJvq2yWvB000KF8ctgGC",
 };
 
 const PayButton = ({ product, userAttributes, user }) => {
@@ -17,7 +18,6 @@ const PayButton = ({ product, userAttributes, user }) => {
     try {
       const input = { id: ownerId };
       const result = await API.graphql(graphqlOperation(getUser, input));
-       console.log( result.data.getUser);
       return result.data.getUser.email;
     } catch (err) {
       console.error(`Error fetching product owner's email`, err);
@@ -35,7 +35,6 @@ const PayButton = ({ product, userAttributes, user }) => {
   const handleCharge = async (token) => {
     try {
       const ownerEmail = await getOwnerEmail(product.owner);
-      console.log({ ownerEmail });
       const result = await API.post("orderlambdafn", "/charge", {
         body: {
           token,
@@ -51,7 +50,6 @@ const PayButton = ({ product, userAttributes, user }) => {
           },
         },
       });
-      console.log({ result });
       if (result.charge.status === "succeeded") {
         let shippingAddress = null;
         if (product.shipped) {

@@ -2,8 +2,6 @@ import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
 
 import { searchMarkets } from "../graphql/queries";
-
-
 import NewMarket from "components/NewMarket";
 import MarketList from "components/MarketList";
 
@@ -15,8 +13,8 @@ class HomePage extends React.Component {
   };
 
   handleSearchChange = (searchTerm) => {
-    this.setState({ searchTerm })
-  }
+    this.setState({ searchTerm });
+  };
 
   handleClearSearch = () =>
     this.setState({ searchTerm: "", searchResults: [] });
@@ -24,27 +22,26 @@ class HomePage extends React.Component {
   handleSearch = async (event) => {
     try {
       event.preventDefault();
-      // this.setState({ isSearching: true });
-      // const result = await API.graphql(
-      //   graphqlOperation(searchMarkets, {
-      //     filter: {
-      //       or: [
-      //         { name: { match: this.state.searchTerm } },
-      //         { owner: { match: this.state.searchTerm } },
-      //         { tags: { match: this.state.searchTerm } },
-      //       ],
-      //     },
-      //     sort: {
-      //       field: "createdAt",
-      //       direction: "desc",
-      //     },
-      //   })
-      // );
-      console.log("resultssss")
-      // this.setState({
-      //   searchResults: result.data.searchMarkets.items,
-      //   isSearching: false,
-      // });
+      this.setState({ isSearching: true });
+      const result = await API.graphql(
+        graphqlOperation(searchMarkets, {
+          filter: {
+            or: [
+              { name: { match: this.state.searchTerm } },
+              { owner: { match: this.state.searchTerm } },
+              { tags: { match: this.state.searchTerm } },
+            ],
+          },
+          sort: {
+            field: "createdAt",
+            direction: "desc",
+          },
+        })
+      );
+      this.setState({
+        searchResults: result.data.searchMarkets.items,
+        isSearching: false,
+      });
     } catch (err) {
       console.error(err);
     }
@@ -60,7 +57,10 @@ class HomePage extends React.Component {
           handleClearSearch={this.handleClearSearch}
           handleSearch={this.handleSearch}
         />
-        <MarketList searchResults={this.state.searchResults} />
+        <MarketList
+          searchResults={this.state.searchResults}
+          user={this.props.user}
+        />
       </>
     );
   }
